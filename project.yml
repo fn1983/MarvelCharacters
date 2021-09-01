@@ -1,0 +1,35 @@
+name: MarvelCharacters
+options:
+  bundleIdPrefix: com.pj
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  deploymentTarget:
+    iOS: 13.0
+packages:
+  SDWebImage:
+    url: https://github.com/SDWebImage/SDWebImage.git
+    from: 5.1.0
+targets:
+  MarvelCharacters:
+    type: application
+    platform: iOS
+    sources: 
+      - path: MarvelCharacters
+    dependencies:
+      - package: SDWebImage
+    scheme:
+      testTargets:
+      - MarvelCharactersTests
+    preBuildScripts:
+      - name: SwiftLint
+        script: |
+                if which swiftlint >/dev/null; then
+                   swiftlint
+                else
+                   echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+                fi
+  MarvelCharactersTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: MarvelCharactersTests
