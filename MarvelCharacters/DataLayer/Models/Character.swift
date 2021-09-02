@@ -33,14 +33,20 @@ extension Character: Codable {
             id: try container.decode(Int.self, forKey: .id),
             name: try container.decode(String.self, forKey: .name),
             description: try container.decode(String.self, forKey: .description),
-            thumbnail: try {
+            thumbnail: try? {
                 let thumbnailContainer = try container.nestedContainer(
                     keyedBy: ThumbnailCodingKeys.self,
                     forKey: .thumbnail
                 )
                 let path = try thumbnailContainer.decode(String.self, forKey: .path)
                 let ext = try thumbnailContainer.decode(String.self, forKey: .extension)
-                return "\(path).\(ext)"
+                let url = "\(path).\(ext)"
+                guard url.isValidURL else {
+                    throw MarvelCharactersError.DataTransferError.parsing(
+                        MarvelCharactersError.General.badUrl
+                    )
+                }
+                return url
             }()
         )
     }

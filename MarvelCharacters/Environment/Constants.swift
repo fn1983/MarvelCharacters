@@ -11,11 +11,16 @@ struct Constants {
     private init() {}
 
     struct Api {
-        static let publicKey = "_____your publicKey_____"
-        static let privateKey = "_____your privateKey____"
+        static let publicKey = "______publicKey_______"
+        static let privateKey = "______privateKey_______"
         static let `protocol` = "https"
         static let version = "v1"
         static let port = "443"
         static let baseUrl = "\(`protocol`)://gateway.marvel.com:\(port)/\(version)/public/"
+    }
+    
+    struct Loading {
+        static let delay = DispatchTimeInterval.milliseconds(300)
+        static let minDisplayTime = DispatchTimeInterval.milliseconds(1000)
     }
 }

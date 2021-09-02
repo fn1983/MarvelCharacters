@@ -8,7 +8,7 @@
 
 protocol CharactersListBusinessLogic {
     func fetchCharacters(request: CharactersList.Fetch.Request)
-
+    func selectedCharacter(withIndex index: Int)
     func setViewController(_ viewController: CharactersListDisplayLogic)
 }
 
@@ -18,7 +18,7 @@ class CharactersListInteractor: CharactersListBusinessLogic {
     private var router: CharactersListRouterLogic
     private var repository: CharactersRepositoryLogic
     
-    // Mark:- Data Storage
+    // MARK:- Data Storage
     private var searchResults: [Character] = []
     private let pageLimit = 21
     private var offSet = 0
@@ -60,9 +60,20 @@ class CharactersListInteractor: CharactersListBusinessLogic {
                     response: .init(characters: self.searchResults)
                 )
             } catch {
-                
+                self.presenter.presentError(
+                    response: .init(error: error)
+                )
             }
         }
+    }
+    
+    func selectedCharacter(withIndex index: Int) {
+        guard (0..<self.searchResults.count).contains(index) else {
+            return
+        }
+        self.router.route(
+            .toDetails(withId: self.searchResults[index].id)
+        )
     }
 
     func setViewController(_ viewController: CharactersListDisplayLogic) {

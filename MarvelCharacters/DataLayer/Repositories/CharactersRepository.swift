@@ -13,6 +13,10 @@ protocol CharactersRepositoryLogic {
         pageLimit: Int,
         completion: @escaping (Result<CharactersResult, Error>) -> Void
     )
+    func fetchCharacter(
+        withId id: Int,
+        completion: @escaping (Result<Character, Error>) -> Void
+    )
 }
 
 public class CharactersRepository: CharactersRepositoryLogic {
@@ -61,6 +65,15 @@ public class CharactersRepository: CharactersRepositoryLogic {
              to save the data and apply some rules to return persisted
              data.
              */
+        }
+    }
+    
+    func fetchCharacter(
+        withId id: Int,
+        completion: @escaping (Result<Character, Error>) -> Void
+    ) {
+        self.queue.async {
+            self.api.fetchCharacter(withId: id, completion: completion)
         }
     }
 }

@@ -18,7 +18,10 @@ final class CharactersApiDataSource: CharactersDataSource {
         pageLimit: Int,
         completion: @escaping (Result<CharactersResult, Error>) -> Void
     ) {
-        let endpoint = APIEndpoints.getCharacters(offSet: offSet, pageLimit: pageLimit)
+        let endpoint = APIEndpoints.getCharacters(
+            offSet: offSet,
+            pageLimit: pageLimit
+        )
         self.api.request(with: endpoint) { (result: Result<FetchCharactersDTO.Result, MarvelCharactersError.DataTransferError>) in
             completion(Result {
                 let data = try result.get()
@@ -28,9 +31,19 @@ final class CharactersApiDataSource: CharactersDataSource {
     }
     
     func fetchCharacter(
-        withId id: String,
+        withId id: Int,
         completion: @escaping (Result<Character, Error>) -> Void
     ) {
-        
+        let endpoint = APIEndpoints.getCharacter(
+            withId: id
+        )
+        self.api.request(with: endpoint) { (result: Result<FetchCharactersDTO.Result, MarvelCharactersError.DataTransferError>) in
+            completion(Result {
+                guard let character = try result.get().characters.first else {
+                    throw MarvelCharactersError.DataTransferError.noResponse
+                }
+                return character
+            })
+        }
     }
 }

@@ -7,24 +7,59 @@
 //
 
 protocol CharacterDetailsBusinessLogic {
-    func doSomething(request: CharacterDetails.Something.Request)
+    func fetchCharacter(request: CharacterDetails.Fetch.Request)
 
     func setViewController(_ viewController: CharacterDetailsDisplayLogic)
 }
 
 class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
-    var presenter: CharacterDetailsPresentationLogic
-    var router: CharacterDetailsRouterLogic
-    //var name: String = ""
+    // MARK:- Dependencies
+    private var id: Int
+    private var presenter: CharacterDetailsPresentationLogic
+    private var router: CharacterDetailsRouterLogic
+    private var repository: CharactersRepositoryLogic
 
-    init(presenter: CharacterDetailsPresentationLogic, router: CharacterDetailsRouterLogic) {
+    // MARK:- Data Storage
+    private var characater: Character?
+    
+    init(
+        id: Int,
+        presenter: CharacterDetailsPresentationLogic,
+        router: CharacterDetailsRouterLogic,
+        repository: CharactersRepositoryLogic
+    ) {
+        self.id = id
         self.presenter = presenter
         self.router = router
+        self.repository = repository
+    }
+    
+    convenience init(
+        withId id: Int,
+        router: CharacterDetailsRouterLogic
+    ) {
+        self.init(
+            id: id,
+            presenter:  CharacterDetailsPresenter(),
+            router: router,
+            repository: CharactersRepository()
+        )
     }
 
-    func doSomething(request: CharacterDetails.Something.Request) {
-        let response = CharacterDetails.Something.Response()
-        self.presenter.presentSomething(response: response)
+    func fetchCharacter(request: CharacterDetails.Fetch.Request) {
+        self.repository.fetchCharacter(withId: self.id) { result in
+            do {
+                let character = try result.get()
+                self.characater = character
+                self.presenter.presentCharacter(
+                    response: .init(character: character)
+                )
+            } catch {
+                self.presenter.presentError(
+                    response: .init(error: error)
+                )
+            }
+        }
     }
 
     func setViewController(_ viewController: CharacterDetailsDisplayLogic) {

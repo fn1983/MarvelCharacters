@@ -9,6 +9,12 @@ packages:
   SDWebImage:
     url: https://github.com/SDWebImage/SDWebImage.git
     from: 5.1.0
+  Lottie:
+    url: https://github.com/airbnb/lottie-ios.git
+    from: 3.2.1
+  Hippolyte:
+    url: https://github.com/JanGorman/Hippolyte.git
+    from: 1.4.0
 targets:
   MarvelCharacters:
     type: application
@@ -17,9 +23,12 @@ targets:
       - path: MarvelCharacters
     dependencies:
       - package: SDWebImage
+      - package: Lottie
     scheme:
+      gatherCoverageData: true
+      randomExecutionOrder: true
       testTargets:
-      - MarvelCharactersTests
+        - MarvelCharactersTests
     preBuildScripts:
       - name: SwiftLint
         script: |
@@ -31,5 +40,20 @@ targets:
   MarvelCharactersTests:
     type: bundle.unit-test
     platform: iOS
+    deploymentTarget: '13.0'
+    dependencies:
+      - target: MarvelCharacters
+      - package: Hippolyte
+    info:
+      path: MarvelCharactersTests/Info.plist
+      properties:
+        CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
+        CFBundleExecutable: $(EXECUTABLE_NAME)
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundleInfoDictionaryVersion: "6.0"
+        CFBundleName: $(PRODUCT_NAME)
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
     sources:
       - path: MarvelCharactersTests

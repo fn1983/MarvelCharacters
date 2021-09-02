@@ -10,6 +10,11 @@ import Foundation
 
 enum CharactersList {
     enum Fetch {}
+    enum Error {}
+    
+    enum Routing {
+        case toDetails(withId: Int)
+    }
 }
 
 extension CharactersList.Fetch {
@@ -29,5 +34,14 @@ extension CharactersList.Fetch.ViewModel {
         var characterImageUrl: URL?
         var title: String
         var caption: String
+    }
+}
+
+extension CharactersList.Error {
+    struct Response {
+        let error: Error
+    }
+    struct ViewModel: ErrorFullScreenViewRenderData {
+        let status: ErrorFullScreenView.Status
     }
 }

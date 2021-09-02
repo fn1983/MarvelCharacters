@@ -11,6 +11,7 @@ import Foundation
 protocol CharactersListPresentationLogic {
     var viewController: CharactersListDisplayLogic? { get set }
     func presentCharacters(response: CharactersList.Fetch.Response)
+    func presentError(response: CharactersList.Error.Response)
 }
 
 class CharactersListPresenter: CharactersListPresentationLogic {
@@ -34,6 +35,19 @@ class CharactersListPresenter: CharactersListPresentationLogic {
         
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.displayCharacters(viewModel: viewModel)
+        }
+    }
+    
+    func presentError(response: CharactersList.Error.Response) {
+        let viewModel: CharactersList.Error.ViewModel
+        switch response.error {
+        case MarvelCharactersError.DataTransferError.networkFailure(let error) where error == .notConnected:
+            viewModel = .init(status: .networkError)
+        default:
+            viewModel = .init(status: .generalError)
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.displayError(viewModel: viewModel)
         }
     }
 }

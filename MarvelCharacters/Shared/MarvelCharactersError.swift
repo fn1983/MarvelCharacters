@@ -23,6 +23,7 @@ public struct MarvelCharactersError {
         case badPayload
         case invalidEditorialContent
         case badDate
+        case badUrl
         case badTimeZone
         case badTypeCast
         case mapping(entity: String)
@@ -34,6 +35,21 @@ public struct MarvelCharactersError {
         case cancelled
         case generic(Error)
         case urlGeneration
+        
+        public static func == (lhs: MarvelCharactersError.NetworkError, rhs: MarvelCharactersError.NetworkError) -> Bool {
+            switch (lhs, rhs) {
+            case (.error(statusCode: let statusLhs, data: _), .error(statusCode: let statusRhs, data: _)):
+                return statusLhs == statusRhs
+            case (.notConnected, .notConnected):
+                return true
+            case (.cancelled, .cancelled):
+                return true
+            case (.urlGeneration, .urlGeneration):
+                return true
+            default:
+                return false
+            }
+        }
     }
 
     public enum DataTransferError: Error {

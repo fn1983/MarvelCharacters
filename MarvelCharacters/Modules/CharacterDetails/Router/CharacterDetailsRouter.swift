@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol CharacterDetailsRouterLogic {}
+protocol CharacterDetailsRouterLogic {}
 
 class CharacterDetailsRouter: NSObject {
     var navigationController: UINavigationController

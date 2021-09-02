@@ -16,7 +16,7 @@ protocol CharactersDataSource {
         pageLimit: Int,
         completion: @escaping (Result<CharactersResult, Error>) -> Void
     )
-    func fetchCharacter(withId id: String, completion: @escaping (Result<Character, Error>) -> Void)
+    func fetchCharacter(withId id: Int, completion: @escaping (Result<Character, Error>) -> Void)
 }
 
 // Local data sources protocol
