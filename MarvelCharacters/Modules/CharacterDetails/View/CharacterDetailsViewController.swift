@@ -54,7 +54,28 @@ class CharacterDetailsViewController: UIViewController {
             withType: DescriptionTableViewCell.self
         )
         self.tableView.separatorStyle = .none
+        
+        let largeConfig = UIImage.SymbolConfiguration(
+            pointSize: 24,
+            weight: .bold,
+            scale: .large
+        )
+        let largeBoldDoc = UIImage(systemName: "xmark.circle.fill", withConfiguration: largeConfig)
+        let button = UIButton()
+        button.tintColor = .black
+        button.setImage(largeBoldDoc, for: .normal)
+        button.addTarget(self, action: #selector(self.close(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addSizeConstraint(size: .init(width: 24, height: 24))
+        self.view.addSubview(button)
+        button.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 16).isActive = true
+        self.view.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: 8).isActive = true
+        
         self.fetchCharacter()
+    }
+    
+    @objc func close(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func fetchCharacter() {

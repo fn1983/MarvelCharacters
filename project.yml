@@ -6,15 +6,15 @@ options:
   deploymentTarget:
     iOS: 13.0
 packages:
-  SDWebImage:
-    url: https://github.com/SDWebImage/SDWebImage.git
-    from: 5.1.0
   Lottie:
     url: https://github.com/airbnb/lottie-ios.git
     from: 3.2.1
   Hippolyte:
     url: https://github.com/JanGorman/Hippolyte.git
     from: 1.4.0
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    from: 6.3.1
 targets:
   MarvelCharacters:
     type: application
@@ -22,8 +22,8 @@ targets:
     sources: 
       - path: MarvelCharacters
     dependencies:
-      - package: SDWebImage
       - package: Lottie
+      - package: Kingfisher
     scheme:
       gatherCoverageData: true
       randomExecutionOrder: true

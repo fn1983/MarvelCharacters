@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SDWebImage
+import Kingfisher
 
 protocol CharactersListDisplayLogic: AnyObject {
     func displayCharacters(viewModel: CharactersList.Fetch.ViewModel)
@@ -91,8 +91,8 @@ extension CharactersListViewController: UITableViewDelegate, UITableViewDataSour
 
 extension CharactersListViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        let urls = self.viewModel?.characters.compactMap({ $0.characterImageUrl })
-        SDWebImagePrefetcher.shared.prefetchURLs(urls)
+        guard let urls = self.viewModel?.characters.compactMap({ $0.characterImageUrl }) else { return }
+        ImagePrefetcher(urls: urls).start()
     }
 }
 

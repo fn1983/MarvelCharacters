@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SDWebImage
+import Kingfisher
 
 protocol ImageTableViewCellRenderData {
     var characterImageUrl: URL? { get }
@@ -30,9 +30,6 @@ class ImageTableViewCell: UITableViewCell {
     }
     
     public func render(viewModel: ImageTableViewCellRenderData) {
-        self.pictureImageView.sd_setImage(
-            with: viewModel.characterImageUrl,
-            completed: nil
-        )
+        self.pictureImageView.kf.setImage(with: viewModel.characterImageUrl)
     }
 }

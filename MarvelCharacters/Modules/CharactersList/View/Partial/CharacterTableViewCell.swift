@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SDWebImage
+import Kingfisher
 
 protocol CharacterTableViewCellRenderData {
     var characterImageUrl: URL? { get }
@@ -37,10 +37,7 @@ class CharacterTableViewCell: UITableViewCell {
     }
     
     public func render(viewModel: CharacterTableViewCellRenderData) {
-        self.mainImageView.sd_setImage(
-            with: viewModel.characterImageUrl,
-            completed: nil
-        )
+        self.mainImageView.kf.setImage(with: viewModel.characterImageUrl)
         self.titleLabel.text = viewModel.title
         self.captionLabel.text = viewModel.caption
     }
