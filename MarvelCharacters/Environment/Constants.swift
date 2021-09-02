@@ -11,8 +11,18 @@ struct Constants {
     private init() {}
 
     struct Api {
-        static let publicKey = "______publicKey_______"
-        static let privateKey = "______privateKey_______"
+        static let publicKey: String = {
+            guard let keys = Bundle.main.object(forInfoDictionaryKey: "MarvelApiKeys") as? [String: String] else {
+                return .init()
+            }
+            return keys["public"] ?? .init()
+        }()
+        static let privateKey: String = {
+            guard let keys = Bundle.main.object(forInfoDictionaryKey: "MarvelApiKeys") as? [String: String] else {
+                return .init()
+            }
+            return keys["private"] ?? .init()
+        }()
         static let `protocol` = "https"
         static let version = "v1"
         static let port = "443"
