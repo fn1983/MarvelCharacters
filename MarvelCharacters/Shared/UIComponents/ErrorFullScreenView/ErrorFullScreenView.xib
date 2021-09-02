@@ -26,17 +26,17 @@
                     <rect key="frame" x="16" y="44" width="382" height="738"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="OYL-cX-z3B">
-                            <rect key="frame" x="35.5" y="271.5" width="311" height="195.5"/>
+                            <rect key="frame" x="41" y="271.5" width="300" height="195.5"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8GB-cI-eHF">
-                                    <rect key="frame" x="83.5" y="0.0" width="144" height="112"/>
+                                    <rect key="frame" x="78" y="0.0" width="144" height="112"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="144" id="AL5-ed-ONy"/>
                                         <constraint firstAttribute="height" constant="112" id="MRd-aX-RHx"/>
                                     </constraints>
                                 </imageView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Iej-Lk-lO6">
-                                    <rect key="frame" x="130.5" y="136" width="50.5" height="59.5"/>
+                                    <rect key="frame" x="125" y="136" width="50.5" height="59.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zN-xW-RUR">
                                             <rect key="frame" x="0.0" y="0.0" width="50.5" height="26.5"/>
@@ -54,7 +54,7 @@
                                 </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="width" constant="311" id="d3o-Oe-vbG"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="d3o-Oe-vbG"/>
                             </constraints>
                         </stackView>
                     </subviews>
@@ -62,6 +62,8 @@
                     <constraints>
                         <constraint firstItem="OYL-cX-z3B" firstAttribute="centerY" secondItem="C55-EX-eOr" secondAttribute="centerY" id="JzD-7X-69N"/>
                         <constraint firstItem="OYL-cX-z3B" firstAttribute="centerX" secondItem="C55-EX-eOr" secondAttribute="centerX" id="ade-xc-8lY"/>
+                        <constraint firstItem="OYL-cX-z3B" firstAttribute="leading" secondItem="C55-EX-eOr" secondAttribute="leading" priority="250" id="rZg-NX-T2D"/>
+                        <constraint firstAttribute="trailing" secondItem="OYL-cX-z3B" secondAttribute="trailing" priority="250" id="x7V-jF-GjA"/>
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="7cO-7W-kR4">

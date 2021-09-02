@@ -43,6 +43,8 @@ class CharactersListPresenter: CharactersListPresentationLogic {
         switch response.error {
         case MarvelCharactersError.DataTransferError.networkFailure(let error) where error == .notConnected:
             viewModel = .init(status: .networkError)
+        case MarvelCharactersError.DataTransferError.networkFailure(let error) where error == .error(statusCode: 401, data: nil):
+            viewModel = .init(status: .missingCredentials)
         default:
             viewModel = .init(status: .generalError)
         }
