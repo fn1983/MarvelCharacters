@@ -20,7 +20,7 @@ extension ErrorFullScreenView {
             case .networkError:
                 return "Houston, we have a problem."
             case .missingCredentials:
-                return "Mmm. Parece que algo falta"
+                return "Mmm. Looks like something is missing"
             }
         }
 
@@ -31,7 +31,7 @@ extension ErrorFullScreenView {
             case .networkError:
                 return "Looks like we are experimenting some connectivity issues. Check your connection."
             case .missingCredentials:
-                return "Asegurate de haber puesto las credenciales de acceso al API. Para más información, ver el README.md"
+                return "Make sure you have configured the credentials to access the API. For more information, see the README.md"
             }
         }
 
