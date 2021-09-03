@@ -13,7 +13,7 @@ You can see all the Marvel's characters at a glance and see more details by tapp
 - Clone the repository
 - run ```xcodegen generate``` to generate the xcodeproj
 - Open the project
-- Set the public/private keys of Marvel API. You cant get yours at: [Marvel Developer Site](https://developer.marvel.com/account)
+- Set the public/private keys of Marvel API. You can get yours at: [Marvel Developer Site](https://developer.marvel.com/account)
 
 **¿How set the API Keys?** Add this to your Info.plist at Environment/Info.plist:
 ```
