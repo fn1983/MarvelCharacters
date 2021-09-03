@@ -16,16 +16,32 @@ class TitleTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .largeTitle)
         label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.addSubview(self.titleLabel)
-        self.titleLabel.layoutAttachAll(
-            insets: .init(top: 16, left: 16, bottom: 16, right: 16)
+        let vStack = UIStackView(arrangedSubviews: {
+            let view = UIView()
+            view.backgroundColor = UIColor(named: "buttons")
+            view.addSizeHeightConstraint(height: 1)
+            return [
+                self.titleLabel,
+                view
+            ]
+        }())
+        vStack.axis = .vertical
+        vStack.distribution = .fill
+        vStack.spacing = 2
+    
+        let hStack = UIStackView(arrangedSubviews: [vStack])
+        hStack.axis = .horizontal
+        hStack.alignment = .top
+        hStack.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(hStack)
+        hStack.layoutAttachAll(
+            insets: .init(top: 8, left: 16, bottom: 8, right: 16)
         )
         self.setup()
     }
@@ -48,4 +64,3 @@ class TitleTableViewCell: UITableViewCell {
         self.titleLabel.text = viewModel.title
     }
 }
-

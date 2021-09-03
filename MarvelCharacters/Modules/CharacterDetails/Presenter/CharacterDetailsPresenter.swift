@@ -11,6 +11,7 @@ import Foundation
 protocol CharacterDetailsPresentationLogic {
     var viewController: CharacterDetailsDisplayLogic? { get set }
     func presentCharacter(response: CharacterDetails.Fetch.Response)
+    func presentShare(response: CharacterDetails.Share.Response)
     func presentError(response: CharacterDetails.Error.Response)
 }
 
@@ -27,6 +28,7 @@ class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
                     return URL(string: str)
                 }(response.character))
             ),
+            .actions,
             .title(
                 data: .init(title: response.character.name)
             ),
@@ -37,6 +39,23 @@ class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
         
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.displayCharacter(viewModel: .init(sections: sections))
+        }
+    }
+    
+    func presentShare(response: CharacterDetails.Share.Response) {
+        let viewModel = CharacterDetails.Share.ViewModel(
+            characterImageUrl: {
+                guard let str = $0.thumbnail else {
+                    return nil
+                }
+                return URL(string: str)
+            }(response.character),
+            title: response.character.name,
+            caption: response.character.description
+        )
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.displayShare(viewModel: viewModel)
         }
     }
     

@@ -6,18 +6,11 @@
 //
 
 import UIKit
-import Kingfisher
 
-protocol CharacterTableViewCellRenderData {
-    var characterImageUrl: URL? { get }
-    var title: String { get }
-    var caption: String { get }
-}
+protocol CharacterTableViewCellRenderData: CharacterViewRenderData {}
 
 class CharacterTableViewCell: UITableViewCell {
-    @IBOutlet weak var mainImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var captionLabel: UILabel!
+    @IBOutlet weak var characterView: CharacterView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,14 +24,10 @@ class CharacterTableViewCell: UITableViewCell {
     
     private func setup() {
         self.selectionStyle = .none
-        self.mainImageView.superview?.cornerRadius = 18
-        self.titleLabel.font = .preferredFont(forTextStyle: .title1)
-        self.captionLabel.font = .preferredFont(forTextStyle: .caption1)
+        self.characterView.prepareForRehuse()
     }
     
     public func render(viewModel: CharacterTableViewCellRenderData) {
-        self.mainImageView.kf.setImage(with: viewModel.characterImageUrl)
-        self.titleLabel.text = viewModel.title
-        self.captionLabel.text = viewModel.caption
+        self.characterView.render(viewModel: viewModel)
     }
 }

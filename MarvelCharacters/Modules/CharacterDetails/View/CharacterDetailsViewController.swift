@@ -10,6 +10,7 @@ import UIKit
 
 protocol CharacterDetailsDisplayLogic: AnyObject {
     func displayCharacter(viewModel: CharacterDetails.Fetch.ViewModel)
+    func displayShare(viewModel: CharacterDetails.Share.ViewModel)
     func displayError(viewModel: CharacterDetails.Error.ViewModel)
 }
 
@@ -46,6 +47,9 @@ class CharacterDetailsViewController: UIViewController {
         self.tableView.contentInset.bottom = 16
         self.tableView.registerCellFromNib(
             withType: ImageTableViewCell.self
+        )
+        self.tableView.registerCellFromNib(
+            withType: ActionsTableViewCell.self
         )
         self.tableView.registerCell(
             withType: TitleTableViewCell.self
@@ -106,12 +110,41 @@ extension CharacterDetailsViewController: UITableViewDelegate, UITableViewDataSo
             let cell: DescriptionTableViewCell! = tableView.dequeueCell(withType: DescriptionTableViewCell.self, for: indexPath)
             cell.render(viewModel: viewModel)
             return cell
-        default: return .init()
+        case .actions:
+            let cell: ActionsTableViewCell! = tableView.dequeueCell(withType: ActionsTableViewCell.self, for: indexPath)
+            cell.delegate = self
+            return cell
         }
     }
 }
 
+extension CharacterDetailsViewController: ActionsTableViewCellDelegate {
+    func userDidSelectShare() {
+        self.interactor.selectedShare()
+    }
+}
+
 extension CharacterDetailsViewController: CharacterDetailsDisplayLogic {
+    func displayShare(viewModel: CharacterDetails.Share.ViewModel) {
+        let view = CharacterView()
+        view.isOpaque = false
+        view.render(viewModel: viewModel)
+        view.frame.size = view.systemLayoutSizeFitting(
+            .init(width: 364, height: 364),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .required
+        )
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        guard let sharingView = view.asImage() else { return }
+        let activityViewController = UIActivityViewController(
+            activityItems: [sharingView],
+            applicationActivities: nil
+        )
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
     func displayCharacter(viewModel: CharacterDetails.Fetch.ViewModel) {
         self.viewModel = viewModel
         self.tableView.reloadData()

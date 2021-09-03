@@ -13,6 +13,7 @@ enum CharacterDetails {
     
     enum Fetch {}
     enum Error {}
+    enum Share {}
 }
 
 extension CharacterDetails.Fetch {
@@ -25,7 +26,7 @@ extension CharacterDetails.Fetch {
             case image(data: ImageData)
             case title(data: TitleData)
             case description(data: DescriptionData)
-            case url
+            case actions
         }
         let sections: [Section]
     }
@@ -49,5 +50,16 @@ extension CharacterDetails.Error {
     }
     struct ViewModel: ErrorFullScreenViewRenderData {
         let status: ErrorFullScreenView.Status
+    }
+}
+
+extension CharacterDetails.Share {
+    struct Response {
+        let character: Character
+    }
+    struct ViewModel: CharacterViewRenderData {
+        var characterImageUrl: URL?
+        var title: String
+        var caption: String
     }
 }

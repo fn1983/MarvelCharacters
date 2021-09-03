@@ -29,7 +29,7 @@ You can see all the Marvel's characters at a glance and see more details by tapp
 ## _Dependencies_
 - Hippolyte: Stub network calls for testing
 - Lottie: Animations
-- SDWebImage: Remote image download/cache management
+- Kingfisher: Remote image download/cache management
 
 ## _Next steps_
 - Add persistency to reduce the API requests, maybe with some rules to keep updated the information

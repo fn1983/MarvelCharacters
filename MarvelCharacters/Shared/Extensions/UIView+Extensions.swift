@@ -269,5 +269,15 @@ extension UIView {
         self.addConstraint(widthConstraint)
         return widthConstraint
     }
+    
+    func asImage() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        currentContext.setFillColor(cyan: 0, magenta: 0, yellow: 0, black: 0, alpha: 1)
+        self.layer.render(in: currentContext)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
 }
-

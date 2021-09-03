@@ -46,5 +46,8 @@ class DescriptionTableViewCell: UITableViewCell {
     
     public func render(viewModel: DescriptionTableViewCellRenderData) {
         self.descriptionLabel.text = viewModel.description
+        if self.descriptionLabel.text?.isEmpty ?? true {
+            self.descriptionLabel.text = "No description available"
+        }
     }
 }

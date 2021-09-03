@@ -8,7 +8,7 @@
 
 protocol CharacterDetailsBusinessLogic {
     func fetchCharacter(request: CharacterDetails.Fetch.Request)
-
+    func selectedShare()
     func setViewController(_ viewController: CharacterDetailsDisplayLogic)
 }
 
@@ -60,6 +60,11 @@ class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
                 )
             }
         }
+    }
+    
+    func selectedShare() {
+        guard let character = self.characater else { return }
+        self.presenter.presentShare(response: .init(character: character))
     }
 
     func setViewController(_ viewController: CharacterDetailsDisplayLogic) {
