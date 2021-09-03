@@ -22,26 +22,19 @@ protocol CharactersRepositoryLogic {
 public class CharactersRepository: CharactersRepositoryLogic {
     // MARK: Remote Data Sources
     private var api: CharactersDataSource
-
-    // MARK: Local Data Sources
-    // private var charactersDS: CharactersCachedDataSource
-
     private var queue: DispatchQueue
 
     // Exposing convenience init for the clients
     public convenience init() {
         self.init(
             api: CharactersApiDataSource()
-            // store: CharactersRealmDataSource()
         )
     }
 
     internal init(
         api: CharactersDataSource
-        // store: CharactersCachedDataSource
     ) {
         self.api = api
-        // self.charactersDS = store
         self.queue = DispatchQueue(
             label: "com.pj.CharactersRepository",
             qos: .userInitiated,
@@ -60,11 +53,6 @@ public class CharactersRepository: CharactersRepositoryLogic {
                 pageLimit: pageLimit,
                 completion: completion
             )
-            /*
-             Before call completion you could maybe use the store
-             to save the data and apply some rules to return persisted
-             data.
-             */
         }
     }
 
