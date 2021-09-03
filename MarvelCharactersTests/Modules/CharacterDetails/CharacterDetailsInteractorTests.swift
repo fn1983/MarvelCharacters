@@ -39,6 +39,14 @@ class CharacterDetailsInteractorTests: XCTestCase {
 
         // Then
         XCTAssertTrue(self.spy.presentCharacterCalled, "\(#function) should ask the presenter to format the result")
+        
+        // When
+        self.spy.expectation = self.expectation(description: "waitSelectShare")
+        sut.selectedShare()
+        self.waitForExpectations(timeout: 60, handler: nil)
+
+        // Then
+        XCTAssertTrue(self.spy.presentShareCalled, "\(#function) should ask the presenter to format the result")
     }
     
     func testFetchCharactersFailure() {
@@ -93,6 +101,7 @@ private final class MockCharacterDetailsPresenter: CharacterDetailsPresentationL
 
     var presentCharacterCalled = false
     var presentErrorCalled = false
+    var presentShareCalled = false
 
     func presentCharacter(response: CharacterDetails.Fetch.Response) {
         self.presentCharacterCalled = true
@@ -103,6 +112,9 @@ private final class MockCharacterDetailsPresenter: CharacterDetailsPresentationL
         self.presentErrorCalled = true
         self.expectation?.fulfill()
     }
-    func presentShare(response: CharacterDetails.Share.Response) {}
+    func presentShare(response: CharacterDetails.Share.Response) {
+        self.presentShareCalled = true
+        self.expectation?.fulfill()
+    }
 }
 

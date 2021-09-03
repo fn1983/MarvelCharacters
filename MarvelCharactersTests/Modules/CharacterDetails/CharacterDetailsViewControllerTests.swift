@@ -34,9 +34,7 @@ class CharacterDetailsViewControllerTests: XCTestCase {
     // MARK: Test setup
     func setupCharacterDetailsViewController() {
         self.sut = CharacterDetailsViewController(interactor: self.spy)
-        self.window.rootViewController = UINavigationController(
-            rootViewController: self.sut
-        )
+        self.window.rootViewController = self.sut
         self.window.makeKeyAndVisible()
     }
 
@@ -69,7 +67,10 @@ class CharacterDetailsViewControllerTests: XCTestCase {
         let viewModel = CharacterDetails.Fetch.ViewModel(
             sections: [
                 .title(data: .init(title: "Lorem ipsum dolor sit amet")),
-                .description(data: .init(description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper imperdiet lorem, eleifend rhoncus nibh scelerisque at. Pellentesque sollicitudin tortor eget porttitor rhoncus. Vivamus laoreet orci suscipit accumsan elementum. Vestibulum maximus nunc a odio tincidunt mattis."))
+                .description(data: .init(description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper imperdiet lorem, eleifend rhoncus nibh scelerisque at. Pellentesque sollicitudin tortor eget porttitor rhoncus. Vivamus laoreet orci suscipit accumsan elementum. Vestibulum maximus nunc a odio tincidunt mattis.")),
+                .actions,
+                .url(data: .init(index: 0, title: "Lorem ipsum dolor sit amet")),
+                .image(data: .init(characterImageUrl: nil))
             ]
         )
 
@@ -94,6 +95,46 @@ class CharacterDetailsViewControllerTests: XCTestCase {
         let result = XCTWaiter.wait(for: [exp], timeout: 60.0)
         if result == XCTWaiter.Result.completed {
             XCTAssertTrue(self.sut.tableView.visibleCells.count > 0, "\(#function) should show the table")
+        } else {
+            XCTFail("Delay interrupted")
+        }
+    }
+    
+    func testDisplayShare() {
+        // Given
+        let viewModel = CharacterDetails.Share.ViewModel(
+            characterImageUrl: nil,
+            title: "Lorem ipsum dolor sit amet",
+            caption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper imperdiet lorem, eleifend rhoncus nibh scelerisque at. Pellentesque sollicitudin tortor eget porttitor rhoncus. Vivamus laoreet orci suscipit accumsan elementum. Vestibulum maximus nunc a odio tincidunt mattis."
+        )
+
+        // When
+        self.loadView()
+        
+        // Then
+        let predicate = NSPredicate(block: { any, _ in
+            guard let controller = any as? UIViewController else {
+                return false
+            }
+            if controller.isViewLoaded && controller.view.window != nil {
+                self.sut.displayShare(viewModel: viewModel)
+            } else {
+                return false
+            }
+            guard let presented = controller.presentedViewController else {
+                return false
+            }
+            return presented is UIActivityViewController
+        })
+
+        let exp = expectation(
+            for: predicate,
+            evaluatedWith: self.sut,
+            handler: nil
+        )
+        let result = XCTWaiter.wait(for: [exp], timeout: 60.0)
+        if result == XCTWaiter.Result.completed {
+            XCTAssertTrue(self.sut.presentedViewController is UIActivityViewController, "\(#function) should show the table")
         } else {
             XCTFail("Delay interrupted")
         }

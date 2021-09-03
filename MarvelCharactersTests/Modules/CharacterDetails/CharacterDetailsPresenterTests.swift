@@ -51,6 +51,28 @@ class CharacterDetailsPresenterTests: XCTestCase {
         XCTAssertTrue(spy.displayCharacterCalled, "\(#function) should ask the view controller to display the result")
     }
     
+    func testPresentShare() {
+        // Given
+        let spy = MockCharacterDetailsDisplay()
+        self.sut.viewController = spy
+        spy.expectation = self.expectation(description: "waitPresentShare")
+
+        // When
+        self.sut.presentShare(
+            response: .init(character: .init(
+                id: 87478,
+                name: "Lorem ipsum dolor sit amet",
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper imperdiet lorem, eleifend rhoncus nibh scelerisque at. Pellentesque sollicitudin tortor eget porttitor rhoncus. Vivamus laoreet orci suscipit accumsan elementum. Vestibulum maximus nunc a odio tincidunt mattis.",
+                thumbnail: "http://google.com",
+                urls: []
+            ))
+        )
+        self.waitForExpectations(timeout: 60, handler: nil)
+
+        // Then
+        XCTAssertTrue(spy.displayShareCalled, "\(#function) should ask the view controller to display the result")
+    }
+    
     func testPresentError() {
         // Given
         let spy = MockCharacterDetailsDisplay()
@@ -64,13 +86,14 @@ class CharacterDetailsPresenterTests: XCTestCase {
         self.waitForExpectations(timeout: 60, handler: nil)
 
         // Then
-        XCTAssertTrue(spy.displayError, "\(#function) should ask the view controller to display the result")
+        XCTAssertTrue(spy.displayErrorCalled, "\(#function) should ask the view controller to display the result")
     }
 }
 
 private final class MockCharacterDetailsDisplay: CharacterDetailsDisplayLogic {
     var displayCharacterCalled = false
-    var displayError = false
+    var displayShareCalled = false
+    var displayErrorCalled = false
     var expectation: XCTestExpectation?
 
     func displayCharacter(viewModel: CharacterDetails.Fetch.ViewModel) {
@@ -79,9 +102,12 @@ private final class MockCharacterDetailsDisplay: CharacterDetailsDisplayLogic {
     }
     
     func displayError(viewModel: CharacterDetails.Error.ViewModel) {
-        self.displayError = true
+        self.displayErrorCalled = true
         self.expectation?.fulfill()
     }
     
-    func displayShare(viewModel: CharacterDetails.Share.ViewModel) {}
+    func displayShare(viewModel: CharacterDetails.Share.ViewModel) {
+        self.displayShareCalled = true
+        self.expectation?.fulfill()
+    }
 }
