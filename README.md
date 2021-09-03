@@ -5,7 +5,7 @@ Marvel Characters is built in Swift with CleanSwift - VIP architecture, if you w
 You can see all the Marvel's characters at a glance and see more details by tapping over the desired character card.
 
 ## *The life cicle:*
-![MacDown Screenshot](./Images/clean.png)
+![MacDown Screenshot](./DocImages/clean.png)
 
 In a scene, the view make resquests to the interactor. The interactor is responsable of all CRUD operations (locally/DB and remote/API's) thru the repositories and deliver the response with the data to the presenter.
 
