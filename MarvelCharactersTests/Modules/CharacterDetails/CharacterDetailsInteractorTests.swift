@@ -77,12 +77,15 @@ private final class MockCharacterRepository: CharactersRepositoryLogic {
             id: 87478,
             name: "Lorem ipsum dolor sit amet",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper imperdiet lorem, eleifend rhoncus nibh scelerisque at. Pellentesque sollicitudin tortor eget porttitor rhoncus. Vivamus laoreet orci suscipit accumsan elementum. Vestibulum maximus nunc a odio tincidunt mattis.",
-            thumbnail: "http://google.com"
+            thumbnail: "http://google.com",
+            urls: []
         )))
     }
 }
 
-private final class MockCharacterDetailsRouter: CharacterDetailsRouterLogic {}
+private final class MockCharacterDetailsRouter: CharacterDetailsRouterLogic {
+    func route(_ destination: CharacterDetails.Routing) {}
+}
 
 private final class MockCharacterDetailsPresenter: CharacterDetailsPresentationLogic {
     var viewController: CharacterDetailsDisplayLogic?
@@ -100,5 +103,6 @@ private final class MockCharacterDetailsPresenter: CharacterDetailsPresentationL
         self.presentErrorCalled = true
         self.expectation?.fulfill()
     }
+    func presentShare(response: CharacterDetails.Share.Response) {}
 }
 

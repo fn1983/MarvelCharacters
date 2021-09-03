@@ -108,4 +108,6 @@ private final class CharacterDetailsBusinessLogicMock: CharacterDetailsBusinessL
     }
     
     func setViewController(_ viewController: CharacterDetailsDisplayLogic) {}
+    func selectedShare() {}
+    func selectedOpenLink(index: Int) {}
 }

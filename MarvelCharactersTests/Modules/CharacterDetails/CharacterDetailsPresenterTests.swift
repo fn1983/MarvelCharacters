@@ -41,7 +41,8 @@ class CharacterDetailsPresenterTests: XCTestCase {
                 id: 87478,
                 name: "Lorem ipsum dolor sit amet",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper imperdiet lorem, eleifend rhoncus nibh scelerisque at. Pellentesque sollicitudin tortor eget porttitor rhoncus. Vivamus laoreet orci suscipit accumsan elementum. Vestibulum maximus nunc a odio tincidunt mattis.",
-                thumbnail: "http://google.com"
+                thumbnail: "http://google.com",
+                urls: []
             ))
         )
         self.waitForExpectations(timeout: 60, handler: nil)
@@ -81,4 +82,6 @@ private final class MockCharacterDetailsDisplay: CharacterDetailsDisplayLogic {
         self.displayError = true
         self.expectation?.fulfill()
     }
+    
+    func displayShare(viewModel: CharacterDetails.Share.ViewModel) {}
 }
