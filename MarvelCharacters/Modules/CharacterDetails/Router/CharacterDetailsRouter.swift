@@ -8,7 +8,9 @@
 
 import UIKit
 
-protocol CharacterDetailsRouterLogic {}
+protocol CharacterDetailsRouterLogic {
+    func route(_ destination: CharacterDetails.Routing)
+}
 
 class CharacterDetailsRouter: NSObject {
     var navigationController: UINavigationController
@@ -16,6 +18,18 @@ class CharacterDetailsRouter: NSObject {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
+    
+    private func routeToWebsite(withUrl strUrl: String) {
+        guard let url = URL(string: strUrl) else { return }
+        UIApplication.shared.open(url)
+    }
 }
 
-extension CharacterDetailsRouter: CharacterDetailsRouterLogic {}
+extension CharacterDetailsRouter: CharacterDetailsRouterLogic {
+    func route(_ destination: CharacterDetails.Routing) {
+        switch destination {
+        case .toWebsite(url: let url):
+            self.routeToWebsite(withUrl: url)
+        }
+    }
+}

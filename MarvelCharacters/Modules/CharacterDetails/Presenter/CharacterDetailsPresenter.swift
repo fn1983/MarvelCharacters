@@ -19,7 +19,7 @@ class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
     weak var viewController: CharacterDetailsDisplayLogic?
 
     func presentCharacter(response: CharacterDetails.Fetch.Response) {
-        let sections: [CharacterDetails.Section] = [
+        var sections: [CharacterDetails.Section] = [
             .image(
                 data: .init(characterImageUrl: {
                     guard let str = $0.thumbnail else {
@@ -36,7 +36,11 @@ class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
                 data: .init(description: response.character.description)
             )
         ]
-        
+        for (index, url) in (response.character.urls ?? []).enumerated() {
+            sections.append(
+                .url(data: .init(index: index, title: url.type.title))
+            )
+        }
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.displayCharacter(viewModel: .init(sections: sections))
         }

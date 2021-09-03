@@ -9,6 +9,7 @@
 protocol CharacterDetailsBusinessLogic {
     func fetchCharacter(request: CharacterDetails.Fetch.Request)
     func selectedShare()
+    func selectedOpenLink(index: Int)
     func setViewController(_ viewController: CharacterDetailsDisplayLogic)
 }
 
@@ -20,7 +21,7 @@ class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
     private var repository: CharactersRepositoryLogic
 
     // MARK:- Data Storage
-    private var characater: Character?
+    private var character: Character?
     
     init(
         id: Int,
@@ -50,7 +51,7 @@ class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
         self.repository.fetchCharacter(withId: self.id) { result in
             do {
                 let character = try result.get()
-                self.characater = character
+                self.character = character
                 self.presenter.presentCharacter(
                     response: .init(character: character)
                 )
@@ -63,8 +64,13 @@ class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
     }
     
     func selectedShare() {
-        guard let character = self.characater else { return }
+        guard let character = self.character else { return }
         self.presenter.presentShare(response: .init(character: character))
+    }
+    
+    func selectedOpenLink(index: Int) {
+        guard let urls = self.character?.urls else { return }
+        self.router.route(.toWebsite(url: urls[index].url))
     }
 
     func setViewController(_ viewController: CharacterDetailsDisplayLogic) {

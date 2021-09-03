@@ -57,6 +57,7 @@ class CharacterDetailsViewController: UIViewController {
         self.tableView.registerCell(
             withType: DescriptionTableViewCell.self
         )
+        self.tableView.registerCell(withType: UITableViewCell.self)
         self.tableView.separatorStyle = .none
         
         let largeConfig = UIImage.SymbolConfiguration(
@@ -64,10 +65,10 @@ class CharacterDetailsViewController: UIViewController {
             weight: .bold,
             scale: .large
         )
-        let largeBoldDoc = UIImage(systemName: "xmark.circle.fill", withConfiguration: largeConfig)
+        let largeCloseImg = UIImage(systemName: "xmark.circle.fill", withConfiguration: largeConfig)
         let button = UIButton()
         button.tintColor = .black
-        button.setImage(largeBoldDoc, for: .normal)
+        button.setImage(largeCloseImg, for: .normal)
         button.addTarget(self, action: #selector(self.close(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addSizeConstraint(size: .init(width: 24, height: 24))
@@ -114,7 +115,32 @@ extension CharacterDetailsViewController: UITableViewDelegate, UITableViewDataSo
             let cell: ActionsTableViewCell! = tableView.dequeueCell(withType: ActionsTableViewCell.self, for: indexPath)
             cell.delegate = self
             return cell
+        case .url(data: let viewModel):
+            let cell: UITableViewCell! = tableView.dequeueCell(withType: UITableViewCell.self, for: indexPath)
+            let smallConfig = UIImage.SymbolConfiguration(
+                pointSize: 18,
+                weight: .semibold,
+                scale: .small
+            )
+            if let image = UIImage(systemName: "chevron.right", withConfiguration: smallConfig) {
+                let accessory  = UIImageView(frame:CGRect(x:0, y:0, width: image.size.width, height: image.size.height))
+                accessory.image = image
+                accessory.tintColor = .red
+                cell.accessoryView = accessory
+            }
+            cell.textLabel?.text = viewModel.title
+            cell.textLabel?.font = .boldSystemFont(ofSize: 16)
+            return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = self.viewModel?.sections[indexPath.row] else {
+            return
+        }
+        guard case .url(let viewModel) = section else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.interactor.selectedOpenLink(index: viewModel.index)
     }
 }
 

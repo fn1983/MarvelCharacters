@@ -12,6 +12,27 @@ public struct Character {
     let name: String
     let description: String
     let thumbnail: String?
+    let urls: [Url]?
+}
+
+extension Character {
+    enum UrlType: String, Codable {
+        case detail
+        case wiki
+        case comiclink
+        
+        var title: String {
+            switch self {
+            case .detail: return "Details"
+            case .wiki: return "Wiki"
+            case .comiclink: return "Comic Link"
+            }
+        }
+    }
+    struct Url: Codable {
+        let type: UrlType
+        let url: String
+    }
 }
 
 extension Character: Codable {
@@ -20,6 +41,7 @@ extension Character: Codable {
         case name
         case description
         case thumbnail
+        case urls
     }
     
     enum ThumbnailCodingKeys: CodingKey {
@@ -47,6 +69,10 @@ extension Character: Codable {
                     )
                 }
                 return url
+            }(),
+            urls: {
+                let urls = try? container.decode([Throwable<Url>].self, forKey: .urls)
+                return urls?.compactMap({ try? $0.result.get() })
             }()
         )
     }

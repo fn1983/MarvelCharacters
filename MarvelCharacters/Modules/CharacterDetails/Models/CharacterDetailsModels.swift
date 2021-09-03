@@ -14,6 +14,10 @@ enum CharacterDetails {
     enum Fetch {}
     enum Error {}
     enum Share {}
+    
+    enum Routing {
+        case toWebsite(url: String)
+    }
 }
 
 extension CharacterDetails.Fetch {
@@ -27,6 +31,7 @@ extension CharacterDetails.Fetch {
             case title(data: TitleData)
             case description(data: DescriptionData)
             case actions
+            case url(data: UrlData)
         }
         let sections: [Section]
     }
@@ -41,6 +46,10 @@ extension CharacterDetails.Fetch.ViewModel {
     }
     struct DescriptionData: DescriptionTableViewCellRenderData {
         let description: String
+    }
+    struct UrlData {
+        let index: Int
+        let title: String
     }
 }
 
