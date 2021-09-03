@@ -1,8 +1,17 @@
 # MarvelCharacters
 
-Marvel Characters is built in Swift with CleanSwift architecture, if you want to collaborate, make sure you use the Xcode Templates provided in the CleanSwift folder.
+Marvel Characters is built in Swift with CleanSwift - VIP architecture, if you want to collaborate, make sure you use the Xcode Templates provided in the CleanSwift folder.
 
 You can see all the Marvel's characters at a glance and see more details by tapping over the desired character card.
+
+## *The life cicle:*
+![MacDown Screenshot](./Images/clean.png)
+
+In a scene, the view make resquests to the interactor. The interactor is responsable of all CRUD operations (locally/DB and remote/API's) thru the repositories and deliver the response with the data to the presenter.
+
+The presenter takes care of formatting all the data and build a ViewModel that is finally passed to the view for displaying.
+
+The folder DataLayer, contains all the business logic of the application. ***Ideally, this logic should be in a separated framework***, so it could be reused across multiple targets and also it would been isolated from the client targets, which only would had access to the public repositories and data transfer models.
 
 ## _Requeriments_
 - XcodeGen
