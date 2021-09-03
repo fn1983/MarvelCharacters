@@ -13,21 +13,21 @@ protocol ActionsTableViewCellDelegate: AnyObject {
 
 class ActionsTableViewCell: UITableViewCell {
     public weak var delegate: ActionsTableViewCellDelegate?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setup()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.setup()
     }
-    
+
     private func setup() {
         self.selectionStyle = .none
     }
-    
+
     @IBAction func shareAction(_ sender: Any) {
         self.delegate?.userDidSelectShare()
     }

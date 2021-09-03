@@ -10,11 +10,11 @@ import Foundation
 
 enum CharacterDetails {
     typealias Section = Fetch.ViewModel.Section
-    
+
     enum Fetch {}
     enum Error {}
     enum Share {}
-    
+
     enum Routing {
         case toWebsite(url: String)
     }

@@ -19,7 +19,7 @@ struct ApiDataNetworkConfig: NetworkConfigurable {
         self.baseURL = URL(string: Constants.Api.baseUrl)!
         self.headers = headers
         self.queryParameters = queryParameters
-        
+
         let ts = Date().currentTimeInMillis
         var params = [
             "apikey": Constants.Api.publicKey,

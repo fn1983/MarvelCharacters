@@ -32,16 +32,16 @@ public class CharactersRepository: CharactersRepositoryLogic {
     public convenience init() {
         self.init(
             api: CharactersApiDataSource()
-            //store: CharactersRealmDataSource()
+            // store: CharactersRealmDataSource()
         )
     }
 
     internal init(
         api: CharactersDataSource
-        //store: CharactersCachedDataSource
+        // store: CharactersCachedDataSource
     ) {
         self.api = api
-        //self.charactersDS = store
+        // self.charactersDS = store
         self.queue = DispatchQueue(
             label: "com.pj.CharactersRepository",
             qos: .userInitiated,
@@ -67,7 +67,7 @@ public class CharactersRepository: CharactersRepositoryLogic {
              */
         }
     }
-    
+
     func fetchCharacter(
         withId id: Int,
         completion: @escaping (Result<Character, Error>) -> Void

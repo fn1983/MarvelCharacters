@@ -269,7 +269,7 @@ extension UIView {
         self.addConstraint(widthConstraint)
         return widthConstraint
     }
-    
+
     func asImage() -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
         defer { UIGraphicsEndImageContext() }

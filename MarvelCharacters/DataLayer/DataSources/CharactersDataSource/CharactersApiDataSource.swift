@@ -29,7 +29,7 @@ final class CharactersApiDataSource: CharactersDataSource {
             })
         }
     }
-    
+
     func fetchCharacter(
         withId id: Int,
         completion: @escaping (Result<Character, Error>) -> Void

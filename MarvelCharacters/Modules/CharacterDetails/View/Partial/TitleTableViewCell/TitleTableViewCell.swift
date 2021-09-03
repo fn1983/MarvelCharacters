@@ -18,10 +18,10 @@ class TitleTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         let vStack = UIStackView(arrangedSubviews: {
             let view = UIView()
             view.backgroundColor = UIColor(named: "buttons")
@@ -34,7 +34,7 @@ class TitleTableViewCell: UITableViewCell {
         vStack.axis = .vertical
         vStack.distribution = .fill
         vStack.spacing = 2
-    
+
         let hStack = UIStackView(arrangedSubviews: [vStack])
         hStack.axis = .horizontal
         hStack.alignment = .top
@@ -45,21 +45,21 @@ class TitleTableViewCell: UITableViewCell {
         )
         self.setup()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.setup()
     }
-    
+
     private func setup() {
         self.selectionStyle = .none
         self.titleLabel.text?.removeAll()
     }
-    
+
     public func render(viewModel: TitleTableViewCellRenderData) {
         self.titleLabel.text = viewModel.title
     }

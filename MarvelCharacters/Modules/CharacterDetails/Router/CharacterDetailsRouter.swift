@@ -18,7 +18,7 @@ class CharacterDetailsRouter: NSObject {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     private func routeToWebsite(withUrl strUrl: String) {
         guard let url = URL(string: strUrl) else { return }
         UIApplication.shared.open(url)

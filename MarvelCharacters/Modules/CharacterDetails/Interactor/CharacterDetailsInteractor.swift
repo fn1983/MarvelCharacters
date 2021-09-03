@@ -14,15 +14,15 @@ protocol CharacterDetailsBusinessLogic {
 }
 
 class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
-    // MARK:- Dependencies
+    // MARK: - Dependencies
     private var id: Int
     private var presenter: CharacterDetailsPresentationLogic
     private var router: CharacterDetailsRouterLogic
     private var repository: CharactersRepositoryLogic
 
-    // MARK:- Data Storage
+    // MARK: - Data Storage
     private var character: Character?
-    
+
     init(
         id: Int,
         presenter: CharacterDetailsPresentationLogic,
@@ -34,14 +34,14 @@ class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
         self.router = router
         self.repository = repository
     }
-    
+
     convenience init(
         withId id: Int,
         router: CharacterDetailsRouterLogic
     ) {
         self.init(
             id: id,
-            presenter:  CharacterDetailsPresenter(),
+            presenter: CharacterDetailsPresenter(),
             router: router,
             repository: CharactersRepository()
         )
@@ -62,12 +62,12 @@ class CharacterDetailsInteractor: CharacterDetailsBusinessLogic {
             }
         }
     }
-    
+
     func selectedShare() {
         guard let character = self.character else { return }
         self.presenter.presentShare(response: .init(character: character))
     }
-    
+
     func selectedOpenLink(index: Int) {
         guard let urls = self.character?.urls else { return }
         self.router.route(.toWebsite(url: urls[index].url))

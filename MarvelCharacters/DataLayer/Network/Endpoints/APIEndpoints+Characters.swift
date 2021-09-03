@@ -21,7 +21,7 @@ extension APIEndpoints {
             ]
         )
     }
-    
+
     static func getCharacter(
         withId id: Int
     ) -> Endpoint<FetchCharactersDTO.Result> {

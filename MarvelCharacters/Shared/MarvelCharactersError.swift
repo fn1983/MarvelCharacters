@@ -35,7 +35,7 @@ public struct MarvelCharactersError {
         case cancelled
         case generic(Error)
         case urlGeneration
-        
+
         public static func == (lhs: MarvelCharactersError.NetworkError, rhs: MarvelCharactersError.NetworkError) -> Bool {
             switch (lhs, rhs) {
             case (.error(statusCode: let statusLhs, data: _), .error(statusCode: let statusRhs, data: _)):

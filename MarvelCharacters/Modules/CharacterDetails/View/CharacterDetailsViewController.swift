@@ -17,7 +17,7 @@ protocol CharacterDetailsDisplayLogic: AnyObject {
 class CharacterDetailsViewController: UIViewController {
     private var interactor: CharacterDetailsBusinessLogic
     private var viewModel: CharacterDetails.Fetch.ViewModel?
-    
+
     public lazy var tableView: UITableView = {
         let tableView: UITableView = .init()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ class CharacterDetailsViewController: UIViewController {
     }()
     private lazy var loading: LoadingFullScreenView = .init()
     private lazy var error: ErrorFullScreenView = .init()
-    
+
     init(interactor: CharacterDetailsBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -43,7 +43,7 @@ class CharacterDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.tableView.contentInset.bottom = 16
         self.tableView.registerCellFromNib(
             withType: ImageTableViewCell.self
@@ -59,7 +59,7 @@ class CharacterDetailsViewController: UIViewController {
         )
         self.tableView.registerCell(withType: UITableViewCell.self)
         self.tableView.separatorStyle = .none
-        
+
         let largeConfig = UIImage.SymbolConfiguration(
             pointSize: 24,
             weight: .bold,
@@ -75,14 +75,14 @@ class CharacterDetailsViewController: UIViewController {
         self.view.addSubview(button)
         button.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 16).isActive = true
         self.view.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: 8).isActive = true
-        
+
         self.fetchCharacter()
     }
-    
+
     @objc func close(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     private func fetchCharacter() {
         self.loading.add(to: self.view)
         self.interactor.fetchCharacter(request: .init())
@@ -93,7 +93,7 @@ extension CharacterDetailsViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.viewModel?.sections.count ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let section = self.viewModel?.sections[indexPath.row] else {
             fatalError()
@@ -123,7 +123,14 @@ extension CharacterDetailsViewController: UITableViewDelegate, UITableViewDataSo
                 scale: .small
             )
             if let image = UIImage(systemName: "chevron.right", withConfiguration: smallConfig) {
-                let accessory  = UIImageView(frame:CGRect(x:0, y:0, width: image.size.width, height: image.size.height))
+                let accessory  = UIImageView(
+                    frame: CGRect(
+                        x: 0,
+                        y: 0,
+                        width: image.size.width,
+                        height: image.size.height
+                    )
+                )
                 accessory.image = image
                 accessory.tintColor = .red
                 cell.accessoryView = accessory
@@ -133,7 +140,7 @@ extension CharacterDetailsViewController: UITableViewDelegate, UITableViewDataSo
             return cell
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = self.viewModel?.sections[indexPath.row] else {
             return
@@ -170,14 +177,14 @@ extension CharacterDetailsViewController: CharacterDetailsDisplayLogic {
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)
     }
-    
+
     func displayCharacter(viewModel: CharacterDetails.Fetch.ViewModel) {
         self.viewModel = viewModel
         self.tableView.reloadData()
         self.error.hide()
         self.loading.hide()
     }
-    
+
     func displayError(viewModel: CharacterDetails.Error.ViewModel) {
         self.loading.hide {
             self.error.show(over: self, viewModel: viewModel)

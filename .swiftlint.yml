@@ -1,0 +1,12 @@
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
+  - CleanSwift
+  - Docs
+  - MarvelCharactersTests
+disabled_rules:
+  - nesting
+  - todo        
+line_length: 150
+identifier_name:
+  min_length: 2 # only min_length
+  allowed_symbols: ["_"]

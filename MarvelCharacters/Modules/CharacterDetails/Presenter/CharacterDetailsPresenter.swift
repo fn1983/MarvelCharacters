@@ -45,7 +45,7 @@ class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
             self?.viewController?.displayCharacter(viewModel: .init(sections: sections))
         }
     }
-    
+
     func presentShare(response: CharacterDetails.Share.Response) {
         let viewModel = CharacterDetails.Share.ViewModel(
             characterImageUrl: {
@@ -57,12 +57,12 @@ class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
             title: response.character.name,
             caption: response.character.description
         )
-        
+
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.displayShare(viewModel: viewModel)
         }
     }
-    
+
     func presentError(response: CharacterDetails.Error.Response) {
         let viewModel: CharacterDetails.Error.ViewModel
         switch response.error {

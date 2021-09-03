@@ -108,4 +108,3 @@ class LoadingFullScreenView: UIView {
         completion()
     }
 }
-

@@ -13,12 +13,12 @@ protocol CharactersListBusinessLogic {
 }
 
 class CharactersListInteractor: CharactersListBusinessLogic {
-    // MARK:- Dependencies
+    // MARK: - Dependencies
     private var presenter: CharactersListPresentationLogic
     private var router: CharactersListRouterLogic
     private var repository: CharactersRepositoryLogic
-    
-    // MARK:- Data Storage
+
+    // MARK: - Data Storage
     private var searchResults: [Character] = []
     private let pageLimit = 21
     private var offSet = 0
@@ -34,10 +34,10 @@ class CharactersListInteractor: CharactersListBusinessLogic {
         self.router = router
         self.repository = repository
     }
-    
+
     convenience init(router: CharactersListRouterLogic) {
         self.init(
-            presenter:  CharactersListPresenter(),
+            presenter: CharactersListPresenter(),
             router: router,
             repository: CharactersRepository()
         )
@@ -66,7 +66,7 @@ class CharactersListInteractor: CharactersListBusinessLogic {
             }
         }
     }
-    
+
     func selectedCharacter(withIndex index: Int) {
         guard (0..<self.searchResults.count).contains(index) else {
             return

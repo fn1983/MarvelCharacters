@@ -18,7 +18,7 @@ class CharactersListRouter: NSObject {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     private func routeToDetails(withId id: Int) {
         let router = CharacterDetailsRouter(
             navigationController: self.navigationController

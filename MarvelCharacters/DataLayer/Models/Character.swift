@@ -20,7 +20,7 @@ extension Character {
         case detail
         case wiki
         case comiclink
-        
+
         var title: String {
             switch self {
             case .detail: return "Details"
@@ -43,12 +43,12 @@ extension Character: Codable {
         case thumbnail
         case urls
     }
-    
+
     enum ThumbnailCodingKeys: CodingKey {
         case path
         case `extension`
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
@@ -79,7 +79,7 @@ extension Character: Codable {
 }
 
 extension Character: Equatable {
-    public static func ==(lhs: Character, rhs: Character) -> Bool {
-        return lhs.id == rhs.id
+    public static func == (lhs: Character, rhs: Character) -> Bool {
+        lhs.id == rhs.id
     }
 }

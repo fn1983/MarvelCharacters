@@ -11,7 +11,7 @@ import Foundation
 enum CharactersList {
     enum Fetch {}
     enum Error {}
-    
+
     enum Routing {
         case toDetails(withId: Int)
     }

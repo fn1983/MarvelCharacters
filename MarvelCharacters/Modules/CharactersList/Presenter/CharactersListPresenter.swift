@@ -32,12 +32,12 @@ class CharactersListPresenter: CharactersListPresentationLogic {
                 )
             })
         )
-        
+
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.displayCharacters(viewModel: viewModel)
         }
     }
-    
+
     func presentError(response: CharactersList.Error.Response) {
         let viewModel: CharactersList.Error.ViewModel
         switch response.error {

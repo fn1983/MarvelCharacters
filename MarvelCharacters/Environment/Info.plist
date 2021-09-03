@@ -62,5 +62,12 @@
 	<true/>
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>Our application needs permission to write photos...</string>
+    <key>MarvelApiKeys</key>
+    <dict>
+        <key>private</key>
+        <string>06f154a8ec714d503e79d339579f435f7c42d72b</string>
+        <key>public</key>
+        <string>dcfe46c0953c1aa0e8c2bd283cbc6a67</string>
+    </dict>
 </dict>
 </plist>

@@ -18,7 +18,7 @@ class CharacterView: UIView {
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var captionLabel: UILabel!
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.fromNib()
@@ -36,14 +36,14 @@ class CharacterView: UIView {
         self.titleLabel.font = .preferredFont(forTextStyle: .title1)
         self.captionLabel.font = .preferredFont(forTextStyle: .caption1)
     }
-    
+
     public func prepareForRehuse() {
         self.mainImageView.kf.cancelDownloadTask()
         self.mainImageView.image = nil
         self.titleLabel.text?.removeAll()
         self.captionLabel.text?.removeAll()
     }
-    
+
     public func render(viewModel: CharacterViewRenderData) {
         self.mainImageView.kf.setImage(with: viewModel.characterImageUrl)
         self.titleLabel.text = viewModel.title

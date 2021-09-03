@@ -25,10 +25,10 @@ class CharactersListViewController: UIViewController {
         tableView.layoutAttachAll()
         return tableView
     }()
-    
+
     private var interactor: CharactersListBusinessLogic
     private var viewModel: CharactersList.Fetch.ViewModel?
-    
+
     private lazy var loading: LoadingFullScreenView = .init()
     private lazy var error: ErrorFullScreenView = .init()
 
@@ -45,7 +45,7 @@ class CharactersListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.title = "Marvel's Characters"
         self.tableView.contentInset.bottom = 16
         self.tableView.registerCellFromNib(
@@ -54,7 +54,7 @@ class CharactersListViewController: UIViewController {
         self.tableView.separatorStyle = .none
         self.fetchCharacters()
     }
-    
+
     private func fetchCharacters() {
         self.loading.add(to: self.view)
         self.interactor.fetchCharacters(request: .init())
@@ -65,7 +65,7 @@ extension CharactersListViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.viewModel?.characters.count ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CharacterTableViewCell! = tableView.dequeueCell(
             withType: CharacterTableViewCell.self,
@@ -76,14 +76,14 @@ extension CharactersListViewController: UITableViewDelegate, UITableViewDataSour
         }
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard indexPath.row + 5 == self.viewModel?.characters.count else {
             return
         }
         self.interactor.fetchCharacters(request: .init(loadMore: true))
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.interactor.selectedCharacter(withIndex: indexPath.row)
     }
@@ -102,7 +102,7 @@ extension CharactersListViewController: CharactersListDisplayLogic {
             self.error.show(over: self, viewModel: viewModel)
         }
     }
-    
+
     func displayCharacters(viewModel: CharactersList.Fetch.ViewModel) {
         self.viewModel = viewModel
         self.tableView.reloadData()

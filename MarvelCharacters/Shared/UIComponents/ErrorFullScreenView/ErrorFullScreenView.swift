@@ -60,7 +60,7 @@ class ErrorFullScreenView: UIView {
         viewController.view.addSubview(self)
         self.layoutAttachAll()
         viewController.view.bringSubviewToFront(self)
-        
+
         self.titleLabel.text = viewModel.status.title
         self.captionLabel.text = viewModel.status.caption
         self.primaryButton.setTitle("Retry", for: .normal)
